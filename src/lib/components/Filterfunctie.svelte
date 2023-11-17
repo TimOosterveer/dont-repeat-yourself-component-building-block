@@ -6,35 +6,35 @@
 
   let selected = ['makkelijk', 'uitdagend'];
   const onderhouds = ['makkelijk', 'uitdagend'];
-  let filteredWorkshops = data.stekjes;
+  let filterdStekjes = data.stekjes;
 
-  console.log(filteredWorkshops);
+  console.log(filterdStekjes);
 
-  function filterWorkshops() {
+  function filtdStekjes() {
     if (selected.length > 0) {
-      filteredWorkshops = data.stekjes.filter((ond) => {
+      filterdStekjes = data.stekjes.filter((ond) => {
         return selected.some((sel) => ond.onderhoud.toLowerCase().includes(sel.toLowerCase()));
       });
     } else {
-      filteredWorkshops = data.stekjes;
+      filterdStekjes = data.stekjes;
     }
   }
 </script>
 
 
-<form on:submit|preventDefault={filterWorkshops}>
-  <label for="month">Groene Vingers</label>
-  <select bind:value={selected} on:change={filterWorkshops} multiple>
+<form on:submit|preventDefault={filtdStekjes}>
+  <label for="onderhoud">Groene Vingers</label>
+  <select bind:value={selected} on:change={filtdStekjes} multiple>
     <option value="">alle</option>
-    {#each onderhouds as month}
-      <option value={month}>{month}</option>
+    {#each onderhouds as onderhoud}
+      <option value={onderhoud}>{onderhoud}</option>
     {/each}
   </select>
 </form>
 
 
-<section class="wrapper">
-	{#each filteredWorkshops as stekje}
+<section>
+	{#each filterdStekjes as stekje}
 		<a href={stekje.slug}>
 			<article>
 				<img src={stekje.fotos[0].url} loading="lazy" alt="foto van {stekje.naam}" />
@@ -59,13 +59,14 @@
 		padding: 0.5rem;
 		border-radius: 0;
 		border: 2px solid #4d7141;
+		border-radius: 5px;
 	}
 
 	select:focus {
 		border: 3px solid rgb(17, 84, 255);
 	}
 
-	.wrapper {
+	section {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -74,7 +75,7 @@
 		align-items: center;
 	}
 
-	.wrapper a {
+	section a {
 		text-decoration: none;
 		padding-bottom: 2rem;
 	}
