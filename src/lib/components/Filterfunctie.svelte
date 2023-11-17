@@ -1,36 +1,37 @@
 <script>
-  export let data
-	import { onMount } from 'svelte';
+  export let data;
+  import { onMount } from 'svelte';
 
   console.log(data);
 
   let selected = ['makkelijk', 'uitdagend'];
-	const onderhouds = ['makkelijk', 'uitdagend	'];
-	let filteredWorkshops = data.stekjes // Data van de workshops in filteredWorkshops
-	
-	console.log(filteredWorkshops)
-	function filterWorkshops() {
-		if (selected) {
-			filteredWorkshops = stekjes.onderhoud.filter((ond) => {
-				console.log(filteredWorkshops)
-				return ond.onderhoud.toLowerCase().includes(selected.toLowerCase());
-			});
-		} else {
-			filteredWorkshops = data.stekjes;
-		}
-	}
+  const onderhouds = ['makkelijk', 'uitdagend'];
+  let filteredWorkshops = data.stekjes;
+
+  console.log(filteredWorkshops);
+
+  function filterWorkshops() {
+    if (selected.length > 0) {
+      filteredWorkshops = data.stekjes.filter((ond) => {
+        return selected.some((sel) => ond.onderhoud.toLowerCase().includes(sel.toLowerCase()));
+      });
+    } else {
+      filteredWorkshops = data.stekjes;
+    }
+  }
 </script>
 
 
 <form on:submit|preventDefault={filterWorkshops}>
-	<label for="month">Selecteer maand:</label>
-	<select id="month" bind:value={selected} on:change={filterWorkshops}>
-		<option value="">alle</option>
-		{#each onderhouds as month}
-			<option value={month}>{month}</option>
-		{/each}
-	</select>
+  <label for="month">Groene Vingers</label>
+  <select bind:value={selected} on:change={filterWorkshops} multiple>
+    <option value="">alle</option>
+    {#each onderhouds as month}
+      <option value={month}>{month}</option>
+    {/each}
+  </select>
 </form>
+
 
 <section class="wrapper">
 	{#each filteredWorkshops as stekje}
@@ -47,6 +48,10 @@
 </section>
 
 <style>
+
+  form {
+    margin: 2rem 
+  }
 	select {
 		display: flex;
 		flex-direction: column;
@@ -66,7 +71,6 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		margin: 2rem;
-		justify-content: center;
 		align-items: center;
 	}
 
