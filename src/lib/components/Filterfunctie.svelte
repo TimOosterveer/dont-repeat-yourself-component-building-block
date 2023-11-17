@@ -2,14 +2,12 @@
   export let data;
   import { onMount } from 'svelte';
 
-  console.log(data);
+
 
   let selected = ['makkelijk', 'uitdagend'];
+  let filterdStekjes = data.stekjes;
   const onderhouds = ['makkelijk', 'uitdagend'];
 	
-  let filterdStekjes = data.stekjes;
-
-  console.log(filterdStekjes);
 
   function filtdStekjes() {
     if (selected.length > 0) {
@@ -63,7 +61,8 @@
 		border-radius: 5px;
 	}
 
-	select:focus {
+	select:focus, 
+	a:focus {
 		border: 5px solid rgb(17, 84, 255);
 	}
 
