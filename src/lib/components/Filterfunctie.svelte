@@ -37,7 +37,7 @@
 	{#each filteredWorkshops as stekje}
 		<a href={stekje.slug}>
 			<article>
-				<img src={stekje.fotos[0].url} alt="foto van {stekje.naam}" />
+				<img src={stekje.fotos[0].url} loading="lazy" alt="foto van {stekje.naam}" />
 				<div>
 					<h3>{stekje.naam}</h3>
 					<p>{stekje.onderhoud}</p>
