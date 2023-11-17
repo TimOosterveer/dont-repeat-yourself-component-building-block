@@ -6,6 +6,7 @@
 
   let selected = ['makkelijk', 'uitdagend'];
   const onderhouds = ['makkelijk', 'uitdagend'];
+	
   let filterdStekjes = data.stekjes;
 
   console.log(filterdStekjes);
@@ -63,7 +64,12 @@
 	}
 
 	select:focus {
-		border: 3px solid rgb(17, 84, 255);
+		border: 5px solid rgb(17, 84, 255);
+	}
+
+	option {
+		padding: 0.5rem;
+		border-radius: 1px solid black;
 	}
 
 	section {
