@@ -1,38 +1,41 @@
 <script>
-  export let data;
-  import { onMount } from 'svelte';
+	export let data;
+	import { onMount } from 'svelte';
 
-  console.log(data);
+	console.log(data);
 
-  let selected = ['makkelijk', 'uitdagend'];
-  const onderhouds = ['makkelijk', 'uitdagend'];
-	
-  let filterdStekjes = data.stekjes;
+	const onderhouds = ['alle', 'makkelijk', 'uitdagend'];
+	let selected = onderhouds[0];
 
-  console.log(filterdStekjes);
+	let filterdStekjes = data.stekjes;
 
-  function filtdStekjes() {
-    if (selected.length > 0) {
-      filterdStekjes = data.stekjes.filter((ond) => {
-        return selected.some((sel) => ond.onderhoud.toLowerCase().includes(sel.toLowerCase()));
-      });
-    } else {
-      filterdStekjes = data.stekjes;
-    }
-  }
+	console.log(filterdStekjes);
+
+	function filtdStekjes() {
+		// if (selected.length > 0) {
+		filterdStekjes = data.stekjes.filter((ond) => {
+			return selected.some(
+				(sel) =>
+					onderhouds[0] !== sel.toLowerCase() &&
+					ond.onderhoud.toLowerCase().includes(sel.toLowerCase())
+			);
+		});
+		// } else {
+		// 	filterdStekjes = data.stekjes;
+		// }
+	}
+	// If else statement kan korter en beter. En maak nu de functie werkend. FEEDBACK
 </script>
 
-
 <form on:submit|preventDefault={filtdStekjes}>
-  <label for="onderhoud">Groene Vingers</label>
-  <select bind:value={selected} on:change={filtdStekjes} multiple>
-    <option value="">alle</option>
-    {#each onderhouds as onderhoud}
-      <option value={onderhoud}>{onderhoud}</option>
-    {/each}
-  </select>
+	<label for="onderhoud">Groene Vingers</label>
+	<pre>{selected}</pre>
+	<select bind:value={selected} multiple>
+		{#each onderhouds as onderhoud}
+			<option value={onderhoud}>{onderhoud}</option>
+		{/each}
+	</select>
 </form>
-
 
 <section>
 	{#each filterdStekjes as stekje}
@@ -48,11 +51,12 @@
 	{/each}
 </section>
 
-<style>
+<!-- van de section een component maken die je import zodat het overzichtelijker is. FEEDBACK -->
 
-  form {
-    margin: 2rem 
-  }
+<style>
+	form {
+		margin: 2rem;
+	}
 	select {
 		display: flex;
 		flex-direction: column;
