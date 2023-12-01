@@ -2,35 +2,37 @@
 	export let data;
 	import { onMount } from 'svelte';
 
-	console.log(data);
-
-	const onderhouds = ['alle', 'makkelijk', 'uitdagend'];
-	let selected = onderhouds[0];
+	// If else statement kan korter en beter. En maak nu de functie werkend. FEEDBACK
+	let selected = ['makkelijk', 'uitdagend'];
+	const onderhouds = ['makkelijk', 'uitdagend'];
 
 	let filterdStekjes = data.stekjes;
 
 	console.log(filterdStekjes);
 
 	function filtdStekjes() {
-		// if (selected.length > 0) {
-		filterdStekjes = data.stekjes.filter((ond) => {
-			return selected.some(
-				(sel) =>
-					onderhouds[0] !== sel.toLowerCase() &&
-					ond.onderhoud.toLowerCase().includes(sel.toLowerCase())
-			);
-		});
-		// } else {
-		// 	filterdStekjes = data.stekjes;
-		// }
+		if (selected.length > 0) {
+			filterdStekjes = data.stekjes.filter((ond) => {
+				return selected.some((sel) => ond.onderhoud.toLowerCase().includes(sel.toLowerCase()));
+			});
+		} else {
+			filterdStekjes = data.stekjes;
+		}
 	}
-	// If else statement kan korter en beter. En maak nu de functie werkend. FEEDBACK
-</script>
+  function handleFormVisibility() {
+    const form = document.querySelector('form');
+    form.classList.remove('closed');
+  }
+  // Check if JavaScript is enabled and remove 'closed' class from the form
+  onMount(handleFormVisibility);
 
-<form on:submit|preventDefault={filtdStekjes}>
+
+
+</script>
+<form class="closed" on:submit|preventDefault={filtdStekjes}>
 	<label for="onderhoud">Groene Vingers</label>
-	<pre>{selected}</pre>
-	<select bind:value={selected} multiple>
+	<select bind:value={selected} on:change={filtdStekjes} multiple>
+		<option value="">alle</option>
 		{#each onderhouds as onderhoud}
 			<option value={onderhoud}>{onderhoud}</option>
 		{/each}
@@ -54,6 +56,9 @@
 <!-- van de section een component maken die je import zodat het overzichtelijker is. FEEDBACK -->
 
 <style>
+	.closed {
+		display: none;
+	}
 	form {
 		margin: 2rem;
 	}
